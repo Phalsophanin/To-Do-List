@@ -40,10 +40,10 @@
       <section class="quick-actions">
         <h3>Quick Actions</h3>
         <div class="action-buttons">
-          <button class="action-btn primary" @click="$router.push('/todos')">
+          <button class="action-btn primary" @click="$router.push('/todolist')">
             <span class="icon">👁️</span> View All Tasks
           </button>
-          <button class="action-btn success" @click="$router.push('/add')">
+          <button class="action-btn success" @click="$router.push('/addtodo')">
             <span class="icon">➕</span> Create New Task
           </button>
         </div>
