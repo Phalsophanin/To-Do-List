@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper">
-    <button class="btn-back" @click="$router.push('/')">
+    <button class="btn-back" @click="$router.push('/dashboard')">
       ← Back to Dashboard
     </button>
 
