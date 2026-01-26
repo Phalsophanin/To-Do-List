@@ -34,5 +34,5 @@ jobs:
           local-dir: ./dist/  # Default Vue build output folder
           server-dir: /htdocs/  # Your target directory on the server
           protocol: ftp # Options: ftp, ftps, or ftps-legacy
-    #   - name: ✅ Deployment complete
+  
        
