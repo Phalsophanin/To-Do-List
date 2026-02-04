@@ -8,7 +8,7 @@
     <main class="dashboard-content">
       <header class="welcome-section">
         <h1>Welcome To ToDo Web </h1>
-        <p>Here is what's happening with your projects today.</p>
+        <p>enjoy with our ToDo Web .</p>
       </header>
 
       <div class="stats-grid">
