@@ -4,7 +4,6 @@ import Dashboard from '../components/dashboard.vue';
 import Todolist from '../components/todolist.vue';
 import AddTodo from '../components/addtodo.vue';
 import EditTodo from '../components/edittodo.vue';
-import Register from '../components/register.vue';
 
 
 
@@ -35,11 +34,6 @@ const routes = [
     path: '/edittodo',
     name: 'EditTodo',
     component: EditTodo,
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register,
   },
 
 ]
