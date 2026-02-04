@@ -62,7 +62,8 @@ export default {
       // Simulated users (you can add more)
       const users = [
         { username: 'phalsophanin', password: 'chanlyna' },
-        { username: 'kanchanborey', password: 'borey' }
+        { username: 'kanchanborey', password: 'borey' },
+        { username: 'vathanaZin', password: 'vathana' }
       ]
 
       // Check credentials
