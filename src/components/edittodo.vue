@@ -1,47 +1,67 @@
 <template>
   <div class="form-wrapper">
-    <button class="btn-back" @click="$router.push('/')">
+    <!-- Back Button -->
+    <button class="btn-back" @click="$router.push('/todolist')">
       ← Back to List
     </button>
 
-    <div class="card">
+    <!-- Edit Card -->
+    <div class="card" v-if="todo">
       <div class="card-header">
-        <div class="header-content">
-          <h2>Edit Task</h2>
-          <span class="id-tag">Task #{{ $route.params.id }}</span>
-        </div>
-        <p>Modify the details of your existing task.</p>
+        <h2>Edit Task #{{ taskId + 1 }}</h2>
+        <p>Modify your task details below.</p>
       </div>
 
-      <div class="card-body" v-if="todo">
+      <div class="card-body">
+        <!-- Title -->
         <div class="form-group">
-          <label for="title">Task Title</label>
-          <input 
-            id="title"
-            v-model="todo.title" 
-            type="text" 
-            placeholder="Update task title..."
-          />
+          <label>Title</label>
+          <input v-model="todo.title" placeholder="Enter task title..." />
         </div>
 
+        <!-- Description -->
         <div class="form-group">
-          <label for="status">Change Status</label>
-          <select id="status" v-model="todo.status">
-            <option value="Pending">Pending</option>
-            <option value="Completed">Completed</option>
+          <label>Description</label>
+          <textarea v-model="todo.description" placeholder="Enter description..."></textarea>
+        </div>
+
+        <!-- Due Date -->
+        <div class="form-group">
+          <label>Due Date</label>
+          <input type="date" v-model="todo.dueDate" />
+        </div>
+
+        <!-- Priority -->
+        <div class="form-group">
+          <label>Priority</label>
+          <select v-model="todo.priority">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
           </select>
         </div>
 
+        <!-- Status -->
+        <div class="form-group">
+          <label>Status</label>
+          <select v-model="todo.status">
+            <option>Pending</option>
+            <option>Completed</option>
+          </select>
+        </div>
+
+        <!-- Action Buttons -->
         <div class="form-actions">
-          <button class="btn-cancel" @click="$router.push('/')">Discard Changes</button>
+          <button class="btn-cancel" @click="$router.push('/todolist')">Cancel</button>
           <button class="btn-update" @click="updateTodo">Update Task</button>
         </div>
       </div>
+    </div>
 
-      <div v-else class="error-state">
-        <p>Task not found or has been removed.</p>
-        <button class="btn-primary" @click="$router.push('/')">Return Home</button>
-      </div>
+    <!-- Error State -->
+    <div v-else class="error-state">
+      <p>Task not found.</p>
+      <button @click="$router.push('/todolist')">Go Back</button>
     </div>
   </div>
 </template>
@@ -50,142 +70,198 @@
 export default {
   data() {
     return {
+      todos: [],
       todo: null,
-      todos: []
+      taskId: null
     }
   },
+
   mounted() {
-    // Load all todos and find the specific one by ID (index)
-    this.todos = JSON.parse(localStorage.getItem('todos')) || [];
-    const id = this.$route.params.id;
-    
-    if (this.todos[id]) {
-      // Use spread operator to create a local copy so changes 
-      // aren't saved to localStorage until the user clicks "Update"
-      this.todo = { ...this.todos[id] };
+    // Load all todos from localStorage
+    this.todos = JSON.parse(localStorage.getItem('todos')) || []
+
+    // Get task index from route params
+    this.taskId = Number(this.$route.params.id)
+
+    // Check if task exists
+    if (this.todos[this.taskId] !== undefined) {
+      // Make a copy to edit safely
+      this.todo = { ...this.todos[this.taskId] }
+    } else {
+      this.todo = null
     }
   },
+
   methods: {
     updateTodo() {
-      if (!this.todo.title.trim()) return;
+      if (!this.todo.title.trim()) {
+        alert('Task title is required')
+        return
+      }
 
-      const id = this.$route.params.id;
-      this.todos[id] = this.todo;
-      
-      localStorage.setItem('todos', JSON.stringify(this.todos));
-      
-      // Optional: Add a success flag or notification here
-      this.$router.push('/');
+      // Update original array
+      this.todos[this.taskId] = this.todo
+      localStorage.setItem('todos', JSON.stringify(this.todos))
+
+      // Navigate back to list
+      this.$router.push('/todolist')
     }
   }
 }
 </script>
 
 <style scoped>
-/* Reusing core styles for professional consistency */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
 .form-wrapper {
-  max-width: 500px;
-  margin: 4rem auto;
+  max-width: 520px;
+  margin: 2rem auto;
   padding: 0 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  color: #590d22;
 }
 
+/* Back Button */
 .btn-back {
-  background: none;
-  border: none;
-  color: #6366f1;
-  font-weight: 500;
+  background: white;
+  border: 2px solid #ffe5ec;
+  color: #ff758f;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  box-shadow: 0 4px 0px #ffcad4;
+  transition: all 0.2s;
 }
 
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0px #ffcad4;
+}
+
+/* Card */
 .card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 30px;
+  border: 4px solid #ffe5ec;
+  box-shadow: 0 12px 0px #ffcad4;
 }
 
 .card-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
-  background: #f9fafb;
+  padding: 2rem;
+  background: #fff0f3;
+  border-bottom: 3px solid #ffe5ec;
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.card-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #c9184a;
+  margin: 0 0 0.5rem 0;
 }
 
-.id-tag {
-  font-size: 0.75rem;
-  background: #e0e7ff;
-  color: #4338ca;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: bold;
+.card-header p {
+  color: #a44a5f;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
+/* Form */
 .card-body {
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .form-group {
   margin-bottom: 1.5rem;
 }
 
-.form-group label {
+label {
   display: block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
+  font-weight: 700;
   margin-bottom: 0.5rem;
+  color: #590d22;
 }
 
-input, select {
+input,
+select,
+textarea {
   width: 100%;
-  padding: 0.75rem;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
+  padding: 12px 16px;
+  border-radius: 15px;
+  border: 2px solid #ffe5ec;
+  font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
+  color: #590d22;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  background: #fffafa;
 }
 
-input:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #ff758f;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255, 117, 143, 0.1);
 }
 
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  margin-top: 2rem;
 }
 
 .btn-update {
-  background: #059669; /* Green for update/success */
+  background: #ff758f;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border-radius: 15px;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 5px 0px #c9184a;
+  transition: all 0.1s;
+}
+
+.btn-update:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0px #c9184a;
+}
+
+.btn-update:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0px #c9184a;
 }
 
 .btn-cancel {
-  background: white;
-  color: #6b7280;
-  border: 1px solid #d1d5db;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  background: #fff0f3;
+  border: none;
+  color: #a44a5f;
+  padding: 0.8rem 1.5rem;
+  border-radius: 15px;
+  font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
+.btn-cancel:hover {
+  background: #ffe5ec;
+}
+
+/* Error State */
 .error-state {
-  padding: 3rem;
+  padding: 4rem 2rem;
   text-align: center;
-  color: #ef4444;
+  color: #ff4d6d;
+  font-weight: 700;
 }
 </style>
