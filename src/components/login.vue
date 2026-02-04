@@ -9,12 +9,12 @@
 
       <form @submit.prevent="handleLogin" class="login-form">
         <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="username">Username</label>
           <input 
-            id="email"
-            v-model="email" 
-            type="email" 
-            placeholder="enter your email" 
+            id="username"
+            v-model="username" 
+            type="text" 
+            placeholder="enter your username" 
             required
           />
         </div>
@@ -22,7 +22,6 @@
         <div class="form-group">
           <div class="label-row">
             <label for="password">Password</label>
-            <a href="#" class="forgot-link">Forgot?</a>
           </div>
           <input 
             id="password"
@@ -40,164 +39,218 @@
       </form>
 
       <div class="login-footer">
-        <p>Don't have an account? <a href="#">Create one</a></p>
+         <p>don't have an account? <a @click.prevent="$router.push('/register')" href="#">Create Account</a></p>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-   
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
-      isLoading: false
+      isLoading: false,
+      errorMessage: '' // for showing errors
     }
   },
   methods: {
-  handleLogin() {
-    if (this.email === "phalsophanin@gmail.com" && this.password === "12345") {
-      this.isLoading = true;
+    handleLogin() {
+      this.isLoading = true
+      this.errorMessage = ''
 
-      setTimeout(() => {
-        localStorage.setItem('isAuthenticated', 'true');
-        this.$router.push('/dashboard');
-        this.isLoading = false;
-      }, 1000);
+      // Simulated users (you can add more)
+      const users = [
+        { username: 'phalsophanin', password: 'chanlyna' },
+        { username: 'kanchanborey', password: 'borey' }
+      ]
 
-    } else {
-      alert("Invalid email or password");
+      // Check credentials
+      const user = users.find(
+        u => u.username === this.username && u.password === this.password
+      )
+
+      setTimeout(() => { // simulate loading
+        if (user) {
+          localStorage.setItem('isAuthenticated', 'true')
+          localStorage.setItem('user', JSON.stringify(user))
+          this.$router.push('/dashboard')
+        } else {
+          this.errorMessage = 'Invalid username or password'
+        }
+        this.isLoading = false
+      }, 800)
     }
   }
 }
-
-}
 </script>
 
+
 <style scoped>
+/* Import a rounded, friendly font */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
 .auth-wrapper {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f3f4f6; /* Light gray background */
-  font-family: 'Inter', sans-serif;
+  background-color: #fff5f8; /* Soft blush background */
+  background-image: radial-gradient(#ffcad4 0.5px, transparent 0.5px);
+  background-size: 20px 20px; /* Subtle polka dot pattern */
+  font-family: 'Quicksand', sans-serif;
+  padding: 20px;
 }
 
 .login-card {
-  background: white;
-  width: 100%;
-  max-width: 400px;
+  background: #ffffff;
   padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 30px; /* Extra rounded for that "cute" feel */
+  border: 4px solid #ffe5ec;
+  box-shadow: 0 15px 0px #ffcad4; /* Flat "pop" shadow */
+  width: 100%;
+  max-width: 380px;
+  transition: transform 0.3s ease;
 }
 
+.login-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Brand/Logo Section */
 .brand-section {
   text-align: center;
   margin-bottom: 2rem;
 }
 
 .logo-circle {
-  width: 48px;
-  height: 48px;
-  background: #6366f1;
+  background: #ff758f;
   color: white;
-  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+  border-radius: 20px; /* Squircle logo */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 30px;
   margin: 0 auto 1rem;
+  box-shadow: 0 4px 0px #c9184a;
 }
 
 .brand-section h1 {
-  font-size: 1.5rem;
-  color: #111827;
-  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #590d22;
+  margin-bottom: 0.2rem;
 }
 
 .brand-section p {
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
+  color: #a44a5f;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
+/* Form Styles */
 .form-group {
-  margin-bottom: 1.25rem;
-}
-
-.label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
 label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
-}
-
-.forgot-link {
-  font-size: 0.75rem;
-  color: #6366f1;
-  text-decoration: none;
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #590d22;
+  margin-left: 5px;
+  margin-bottom: 0.4rem;
 }
 
 input {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  padding: 1rem;
+  border: 2px solid #ffe5ec;
+  border-radius: 15px;
+  background: #fff0f3;
+  font-family: inherit;
   font-size: 1rem;
-  transition: all 0.2s;
+  color: #590d22;
+  transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
 input:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #ff758f;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 117, 143, 0.1);
 }
 
+input::placeholder {
+  color: #ffb3c1;
+}
+
+/* Button */
 .btn-login {
   width: 100%;
-  background: #6366f1;
+  padding: 1rem;
+  background-color: #ff758f;
   color: white;
-  padding: 0.75rem;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
+  box-shadow: 0 5px 0px #c9184a;
+  transition: all 0.1s active;
   margin-top: 1rem;
+  position: relative;
 }
 
-.btn-login:hover:not(:disabled) {
-  background: #4f46e5;
+.btn-login:hover {
+  background-color: #ff859d;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0px #c9184a;
+}
+
+.btn-login:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0px #c9184a;
 }
 
 .btn-login:disabled {
-  opacity: 0.7;
+  background-color: #ffb3c1;
+  box-shadow: 0 5px 0px #ff859d;
   cursor: not-allowed;
+}
+
+/* Footer & Links */
+.label-row .forgot-link, 
+.login-footer a {
+  color: #ff4d6d;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.login-footer a:hover, 
+.forgot-link:hover {
+  text-decoration: underline;
 }
 
 .login-footer {
   margin-top: 2rem;
-  text-align: center;
-  font-size: 0.875rem;
-  color: #6b7280;
+  font-size: 0.9rem;
+  color: #a44a5f;
 }
 
-.login-footer a {
-  color: #6366f1;
-  text-decoration: none;
-  font-weight: 600;
+/* Loading Animation */
+.loader {
+  display: inline-block;
+  animation: bounce 0.6s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
 }
 </style>
