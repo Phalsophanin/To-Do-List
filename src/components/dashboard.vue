@@ -7,7 +7,7 @@
 
     <main class="dashboard-content">
       <header class="welcome-section">
-        <h1>Welcome To ToDo Web</h1>
+        <h1>Welcome To ToDo Web </h1>
         <p>Here is what's happening with your projects today.</p>
       </header>
 
