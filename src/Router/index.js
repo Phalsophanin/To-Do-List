@@ -4,6 +4,7 @@ import Dashboard from '../components/dashboard.vue';
 import Todolist from '../components/todolist.vue';
 import AddTodo from '../components/addtodo.vue';
 import EditTodo from '../components/edittodo.vue';
+import Valentain from '../components/Valentain.vue';
 
 
 
@@ -12,8 +13,8 @@ import EditTodo from '../components/edittodo.vue';
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: Login,
+    name: 'Valentine',
+    component: Valentain,
   },
    {
     path: '/dashboard',
