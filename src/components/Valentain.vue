@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 // Import your assets
-import songVideo from '../assets/song.mp4';
+import songVideo from '../assets/song.MP4';
 import bearGif from '../assets/bear.gif';
 import cuteImg from '../assets/3.png';
 
@@ -65,7 +65,7 @@ onUnmounted(() => {
 
     <!-- Use imported video -->
     <video ref="audioPlayer" class="hidden" loop>
-      <source :src="songVideo" type="video/mp4" />
+      <source :src="songVideo" type="video/MP4" />
     </video>
 
     <transition name="fade">
@@ -121,7 +121,7 @@ onUnmounted(() => {
             Forever & Always! 
           </h2>
           <p class="text-[#c9184a] text-2xl font-semibold mb-8">
-            I am so lucky to have you. love you klang klang mes</p>
+            I am so lucky to have you. love you klanf </p>
           <button 
             @click="reset"
             class="bg-white text-[#ff4d6d] hover:scale-110 text-2xl font-bold py-3 px-11 rounded-xl transition-all shadow-[0_4px_0_#ff85a1] active:translate-y-1"
