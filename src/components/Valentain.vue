@@ -121,7 +121,7 @@ onUnmounted(() => {
             Forever & Always! 
           </h2>
           <p class="text-[#c9184a] text-2xl font-semibold mb-8">
-            I am so lucky to have you. love you klanf </p>
+            I am so lucky to have you. And I wish i could go back and do things differently. Losing you made me realize how much you truly mean to me. I don't expect anything, but I just want you to know... my heart still belong to you, especially in the way you make me feel. You are my everything. 💕</p>
           <button 
             @click="reset"
             class="bg-white text-[#ff4d6d] hover:scale-110 text-2xl font-bold py-3 px-11 rounded-xl transition-all shadow-[0_4px_0_#ff85a1] active:translate-y-1"
