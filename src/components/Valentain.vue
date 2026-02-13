@@ -57,10 +57,10 @@
         
         <div class="bg-white/40 p-8 rounded-[40px] backdrop-blur-md border-4 border-white shadow-2xl">
           <h2 class="text-white text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-            Forever & Always! 💍
+            Forever & Always! 
           </h2>
           <p class="text-[#c9184a] text-2xl font-semibold mb-8">
-            I am so lucky to have you.
+            I am so lucky to have you. Thank you for being my sunshine, my rock, and my everything. I love you to the moon and back, Nin Nin! 🌙❤️
           </p>
           <button 
             @click="reset"
