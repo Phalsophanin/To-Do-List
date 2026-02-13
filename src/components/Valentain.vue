@@ -60,8 +60,7 @@
             Forever & Always! 
           </h2>
           <p class="text-[#c9184a] text-2xl font-semibold mb-8">
-            I am so lucky to have you. Thank you for being my sunshine, my rock, and my everything. I love you to the moon and back, Nin Nin! 🌙❤️
-          </p>
+            I am so lucky to have you. love you</p>
           <button 
             @click="reset"
             class="bg-white text-[#ff4d6d] hover:scale-110 text-2xl font-bold py-3 px-11 rounded-xl transition-all shadow-[0_4px_0_#ff85a1] active:translate-y-1"
